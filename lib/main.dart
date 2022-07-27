@@ -5,6 +5,7 @@ import 'package:my_flutter/screen/register.dart';
 import 'package:my_flutter/screen/login.dart';
 import 'package:my_flutter/screen/maphome.dart';
 import 'package:my_flutter/screen/setting.dart';
+import 'package:my_flutter/screen/booking.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +22,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomeScreen());
+        home: BookingScreen());
   }
 }
