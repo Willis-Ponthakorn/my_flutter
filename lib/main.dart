@@ -6,6 +6,7 @@ import 'package:my_flutter/screen/login.dart';
 import 'package:my_flutter/screen/maphome.dart';
 import 'package:my_flutter/screen/setting.dart';
 import 'package:my_flutter/screen/booking.dart';
+import 'package:my_flutter/screen/payment.dart';
 
 void main() {
   runApp(const MyApp());
