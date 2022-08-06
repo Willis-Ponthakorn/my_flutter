@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String testText = "";
   String email = "";
   String password = '';
+
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -58,16 +59,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.topLeft,
                         child: IconButton(
                             onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return HomeScreen();
-                              }));
+                              Navigator.pop(context);
                             },
                             icon: Icon(Icons.arrow_back_ios_new)),
                       ),
                       const Image(
                         image: AssetImage("assets/images/logo2.png"),
-                        width: 110,
+                        width: 90,
                       ),
                       const Text(
                         "EVBON",
@@ -78,14 +76,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
-                        height: 34,
+                        height: 54,
                         child: FormHelper.inputFieldWidget(
                           context,
                           "email",
                           "                           Email",
                           (onValidateVal) {
                             if (onValidateVal.isEmpty) {
-                              return 'Host URL can\'t be empty.';
+                              return "email invaild";
                             }
 
                             return null;
@@ -110,14 +108,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        height: 34,
+                        height: 54,
                         child: FormHelper.inputFieldWidget(
                           context,
                           "password",
                           "                       Password",
                           (onValidateVal) {
                             if (onValidateVal.isEmpty) {
-                              return 'Host URL can\'t be empty.';
+                              return "password invaild";
                             }
 
                             return null;
