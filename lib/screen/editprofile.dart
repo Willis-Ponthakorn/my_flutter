@@ -175,7 +175,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         color: Colors.white),
                   ),
                   Text(
-                    '1/22/421',
+                    '01/07/44',
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
@@ -232,10 +232,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return LoginScreen();
-                        }));
+                        showAlertDialog(context);
                       },
                       child: Icon(
                         Icons.arrow_forward_ios,
@@ -249,4 +246,40 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // Create button
+  Widget cancelButton = TextButton(
+    child: const Text("Cancel"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+
+  Widget okButton = TextButton(
+    child: const Text("OK"),
+    onPressed: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
+    },
+  );
+
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Are you sure?"),
+    actions: [
+      cancelButton,
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

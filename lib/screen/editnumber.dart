@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -37,35 +38,29 @@ class _EditNumberScreenState extends State<EditNumberScreen> {
               SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                height: 50,
-                child: FormHelper.inputFieldWidget(
-                  context,
-                  "newphonenumber",
-                  "New Phone Number",
-                  (onValidateVal) {
-                    if (onValidateVal.isEmpty) {
-                      return 'Host URL can\'t be empty.';
-                    }
-
-                    return null;
-                  },
-                  (onSavedVal) => {
-                    this.testText = onSavedVal,
-                  },
-                  initialValue: this.testText,
+              Padding(
+                padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
+                child: TextField(
+                  maxLength: 10,
                   obscureText: false,
-                  borderFocusColor: Colors.white,
-                  prefixIconColor: Theme.of(context).primaryColor,
-                  borderColor: Colors.white,
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  focusedBorderWidth: 1,
-                  hintColor: Colors.white,
-                  fontSize: 14,
-                  hintFontSize: 14,
-                  paddingLeft: 35,
-                  paddingRight: 35,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 2.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 2.0)),
+                    labelText: 'Confirm new phone number',
+                    labelStyle: TextStyle(fontSize: 15, color: Colors.white),
+                    hintText: 'Phone number must be 10 characters',
+                    hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                    counterStyle: TextStyle(fontSize: 12, color: Colors.white),
+                  ),
                 ),
               ),
               SizedBox(

@@ -53,6 +53,7 @@ class _EditEmailScreenState extends State<EditEmailScreen> {
                   (onSavedVal) => {
                     this.testText = onSavedVal,
                   },
+                  textColor: Colors.white,
                   initialValue: this.testText,
                   obscureText: false,
                   borderFocusColor: Colors.white,

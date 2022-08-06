@@ -18,6 +18,7 @@ class MapHomeScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<MapHomeScreen> {
   @override
+  static final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   String testText = "";
   String reqMod = "";
   final List<String> items = [
@@ -34,193 +35,215 @@ class _LoginScreenState extends State<MapHomeScreen> {
     final padding = MediaQuery.of(context).padding;
     double newheight = height - padding.top - padding.bottom;
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Container(
-      height: height,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/images/Bg3.png"),
-            fit: BoxFit.fitWidth,
-            alignment: Alignment.topCenter),
-        color: Color.fromRGBO(20, 20, 20, 1),
-      ),
-      child: Column(children: [
-        SizedBox(
-          width: screenWidth,
-        ),
-        const Padding(
-            padding: EdgeInsets.fromLTRB(20, 70, 0, 0),
-            child: Align(
-                alignment: Alignment.topLeft,
-                child: Image(
-                  image: AssetImage("assets/images/logo3.png"),
-                  width: 40,
-                ))),
-        SizedBox(
-          height: height / 4,
-        ),
-        DropdownButtonHideUnderline(
-          child: DropdownButton2(
-            hint: Text(
-              '   Select Car model',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.white,
+        body: Form(
+            key: globalKey,
+            child: SingleChildScrollView(
+                child: Container(
+              height: height,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/Bg3.png"),
+                    fit: BoxFit.fitWidth,
+                    alignment: Alignment.topCenter),
+                color: Color.fromRGBO(20, 20, 20, 1),
               ),
-            ),
-            items: items
-                .map((item) => DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(
+              child: Column(children: [
+                SizedBox(
+                  width: screenWidth,
+                ),
+                const Padding(
+                    padding: EdgeInsets.fromLTRB(20, 70, 0, 0),
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Image(
+                          image: AssetImage("assets/images/logo3.png"),
+                          width: 40,
+                        ))),
+                SizedBox(
+                  height: height / 4,
+                ),
+                DropdownButtonHideUnderline(
+                  child: DropdownButtonFormField2(
+                    hint: Text(
+                      '   Select Car model',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                    items: items
+                        .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                    value: selectedValue,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value as String;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select model.';
+                      }
+                    },
+                    buttonHeight: 50,
+                    itemHeight: 30,
+                    buttonDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Color.fromRGBO(212, 17, 17, 1),
+                        width: 2,
+                      ),
+                      color: Color.fromRGBO(50, 55, 65, 1),
+                    ),
+                  ),
+                ),
+                Container(
+                    margin: const EdgeInsets.all(10.0),
+                    width: screenWidth * 5 / 6,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Color.fromRGBO(32, 32, 34, 1),
+                    ),
+                    child: Column(children: [
+                      SizedBox(height: 15),
+                      const Text(
+                        "Battery level",
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: screenWidth * 2 / 3,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(50, 55, 65, 1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: 54,
+                        child: FormHelper.inputFieldWidget(
+                          context,
+                          "batterylevel",
+                          "Battery level",
+                          (onValidateVal) {
+                            if (onValidateVal.isEmpty) {
+                              return 'battery level invaild';
+                            }
+
+                            return null;
+                          },
+                          (onSavedVal) => {
+                            this.testText = onSavedVal,
+                          },
+                          isNumeric: true,
+                          initialValue: this.testText,
+                          obscureText: false,
+                          borderFocusColor: Colors.black.withOpacity(0),
+                          prefixIconColor: Theme.of(context).primaryColor,
+                          borderColor: Colors.black.withOpacity(0),
+                          borderRadius: 8,
+                          borderWidth: 1,
+                          focusedBorderWidth: 1,
+                          hintColor: Color.fromRGBO(81, 82, 90, 1),
                           fontSize: 14,
+                          hintFontSize: 14,
+                          paddingLeft: 10,
                         ),
                       ),
-                    ))
-                .toList(),
-            value: selectedValue,
-            onChanged: (value) {
-              setState(() {
-                selectedValue = value as String;
-              });
-            },
-            buttonHeight: 50,
-            buttonWidth: screenWidth - screenWidth / 6,
-            itemHeight: 30,
-            buttonDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: Color.fromRGBO(212, 17, 17, 1),
-                width: 2,
-              ),
-              color: Color.fromRGBO(50, 55, 65, 1),
-            ),
-          ),
-        ),
-        Container(
-            margin: const EdgeInsets.all(10.0),
-            width: screenWidth * 5 / 6,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Color.fromRGBO(32, 32, 34, 1),
-            ),
-            child: Column(children: [
-              SizedBox(height: 15),
-              const Text(
-                "Battery level",
-                style: TextStyle(fontSize: 20, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: screenWidth * 2 / 3,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(50, 55, 65, 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                height: 50,
-                child: FormHelper.inputFieldWidget(
-                  context,
-                  "batterylevel",
-                  "Battery level",
-                  (onValidateVal) {
-                    if (onValidateVal.isEmpty) {
-                      return 'Host URL can\'t be empty.';
-                    }
+                      const SizedBox(height: 20),
+                    ])),
+                Container(
+                    margin: const EdgeInsets.all(10.0),
+                    width: screenWidth * 5 / 6,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Color.fromRGBO(32, 32, 34, 1),
+                    ),
+                    child: Column(children: [
+                      SizedBox(height: 15),
+                      const Text(
+                        "Mile number ODO",
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: screenWidth * 2 / 3,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(50, 55, 65, 1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: 54,
+                        child: FormHelper.inputFieldWidget(
+                          context,
+                          "numberodo",
+                          "Mile number ODO",
+                          (onValidateVal) {
+                            if (onValidateVal.isEmpty) {
+                              return 'ODO invaild';
+                            }
 
-                    return null;
-                  },
-                  (onSavedVal) => {
-                    this.testText = onSavedVal,
-                  },
-                  initialValue: this.testText,
-                  obscureText: false,
-                  borderFocusColor: Colors.black.withOpacity(0),
-                  prefixIconColor: Theme.of(context).primaryColor,
-                  borderColor: Colors.black.withOpacity(0),
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  focusedBorderWidth: 1,
-                  hintColor: Color.fromRGBO(81, 82, 90, 1),
-                  fontSize: 14,
-                  hintFontSize: 14,
-                  paddingLeft: 10,
-                ),
-              ),
-              const SizedBox(height: 20),
-            ])),
-        Container(
-            margin: const EdgeInsets.all(10.0),
-            width: screenWidth * 5 / 6,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Color.fromRGBO(32, 32, 34, 1),
-            ),
-            child: Column(children: [
-              SizedBox(height: 15),
-              const Text(
-                "Mile number ODO",
-                style: TextStyle(fontSize: 20, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: screenWidth * 2 / 3,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(50, 55, 65, 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                height: 50,
-                child: FormHelper.inputFieldWidget(
-                  context,
-                  "numberodo",
-                  "Mile number ODO",
-                  (onValidateVal) {
-                    if (onValidateVal.isEmpty) {
-                      return 'Host URL can\'t be empty.';
+                            return null;
+                          },
+                          (onSavedVal) => {
+                            this.testText = onSavedVal,
+                          },
+                          isNumeric: true,
+                          initialValue: this.testText,
+                          obscureText: false,
+                          borderFocusColor: Colors.black.withOpacity(0),
+                          prefixIconColor: Theme.of(context).primaryColor,
+                          borderColor: Colors.black.withOpacity(0),
+                          borderRadius: 8,
+                          borderWidth: 1,
+                          focusedBorderWidth: 1,
+                          hintColor: Color.fromRGBO(81, 82, 90, 1),
+                          fontSize: 14,
+                          hintFontSize: 14,
+                          paddingLeft: 10,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ])),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    fixedSize: const Size(256, 34),
+                    primary: const Color.fromRGBO(76, 77, 79, 1), // background
+                    onPrimary: Colors.white, // foreground
+                  ),
+                  onPressed: () {
+                    if (validateAndSave()) {
+                      print("done");
                     }
-
-                    return null;
                   },
-                  (onSavedVal) => {
-                    this.testText = onSavedVal,
-                  },
-                  initialValue: this.testText,
-                  obscureText: false,
-                  borderFocusColor: Colors.black.withOpacity(0),
-                  prefixIconColor: Theme.of(context).primaryColor,
-                  borderColor: Colors.black.withOpacity(0),
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  focusedBorderWidth: 1,
-                  hintColor: Color.fromRGBO(81, 82, 90, 1),
-                  fontSize: 14,
-                  hintFontSize: 14,
-                  paddingLeft: 10,
+                  child: const Text(
+                    'Continue',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-            ])),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            fixedSize: const Size(256, 34),
-            primary: const Color.fromRGBO(76, 77, 79, 1), // background
-            onPrimary: Colors.white, // foreground
-          ),
-          onPressed: () {},
-          child: const Text(
-            'Continue',
-            style: TextStyle(fontSize: 16),
-          ),
-        ),
-      ]),
-    )));
+              ]),
+            ))));
+  }
+
+  bool validateAndSave() {
+    final form = globalKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    } else {
+      return false;
+    }
   }
 }
